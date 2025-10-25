@@ -1,0 +1,162 @@
+
+-- Ex1.
+
+-- Primeiro Criamos o Database
+
+CREATE DATABASE IF NOT EXISTS plataforma_eventos
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE plataforma_eventos;
+
+-- Criar a tabela eventos
+CREATE TABLE eventos (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(200) NOT NULL,
+  categoria VARCHAR(100) NOT NULL,
+  detalhes JSON NULL,
+  inscricoes JSON NULL,
+  PRIMARY KEY (id)
+);
+
+
+-- Ex2.
+
+-- Inserindo 5 eventos na tabela eventos
+INSERT INTO eventos (titulo, categoria, detalhes, inscricoes)
+VALUES
+-- 1
+(
+  'Workshop de Python', 'Programação',
+  JSON_OBJECT(
+    'local','Sala 101',
+    'data','2025-09-10',
+    'palestrantes', JSON_ARRAY('Ana Silva','Carlos Souza'),
+    'capacidade',50
+  ),
+  JSON_ARRAY(
+    JSON_OBJECT('nome','Felipe','email','felipe@email.com','presente', true),
+    JSON_OBJECT('nome','Maria','email','maria@email.com','presente', false)
+  )
+),
+-- Ex2
+(
+  'Curso de UX Design', 'Design',
+  JSON_OBJECT(
+    'local','Auditório A',
+    'data','2025-09-15',
+    'palestrantes', JSON_ARRAY('Juliana Alves'),
+    'capacidade',120
+  ),
+  JSON_ARRAY(
+    JSON_OBJECT('nome','João','email','joao@email.com','presente', true)
+  )
+),
+-- Ex3
+(
+  'Palestra de Marketing Digital', 'Marketing',
+  JSON_OBJECT(
+    'local','Sala Virtual Zoom',
+    'data','2025-09-20',
+    'palestrantes', JSON_ARRAY('Ricardo Lima','Fernanda Torres'),
+    'capacidade',200
+  ),
+  JSON_ARRAY(
+    JSON_OBJECT('nome','Carla','email','carla@email.com','presente', false),
+    JSON_OBJECT('nome','Marcos','email','marcos@email.com','presente', false)
+  )
+),
+-- Ex4
+(
+  'Curso de Inteligência Artificial', 'Programação',
+  JSON_OBJECT(
+    'local','Sala 305',
+    'data','2025-10-05',
+    'palestrantes', JSON_ARRAY('Dr. Alberto Nunes'),
+    'capacidade',80
+  ),
+  JSON_ARRAY(
+    JSON_OBJECT('nome','Paula','email','paula@email.com','presente', true),
+    JSON_OBJECT('nome','Thiago','email','thiago@email.com','presente', true)
+  )
+),
+-- Ex5
+(
+  'Workshop de Fotografia', 'Arte',
+  JSON_OBJECT(
+    'local','Estúdio Central',
+    'data','2025-10-12',
+    'palestrantes', JSON_ARRAY('Sérgio Ramos'),
+    'capacidade',30
+  ),
+  JSON_ARRAY(
+    JSON_OBJECT('nome','Bruna','email','bruna@email.com','presente', false)
+  )
+);
+
+
+
+
+-- Ex6
+
+SELECT id, titulo, categoria, detalhes
+FROM eventos
+WHERE JSON_CONTAINS(
+  JSON_EXTRACT(detalhes, '$.palestrantes'),
+  JSON_QUOTE('Ana Silva')
+);
+
+SELECT JSON_EXTRACT(detalhes, '$.palestrantes')
+FROM eventos;
+
+SELECT DATABASE();              -- qual banco está em uso?
+SHOW TABLES;                    -- a tabela 'eventos' existe aí?
+SELECT COUNT(*) FROM eventos;   -- quantas linhas tem?
+
+SELECT * FROM eventos;
+
+
+
+-- Liste os participantes presentes de cada evento (inscricoes). 
+SELECT 
+    e.id,
+    e.titulo,
+    p.nome,
+    p.email
+FROM eventos e,
+-- Aqui ele percorre cada item do array
+JSON_TABLE(
+    e.inscricoes, '$[*]'
+   -- Define as colunas a serem extraídas
+	COLUMNS (
+        nome VARCHAR(100) PATH '$.nome',
+        email VARCHAR(150) PATH '$.email',
+        presente BOOL PATH '$.presente'
+    )
+) AS p
+-- Filtrando apenas o que está marcado como presente
+WHERE p.presente = true;
+
+
+-- Mostre o local e o nome do primeiro palestrante de cada evento.
+SELECT 
+    id,
+    titulo,
+    JSON_UNQUOTE(JSON_EXTRACT(detalhes, '$.local')) AS local_evento,
+    JSON_UNQUOTE(JSON_EXTRACT(detalhes, '$.palestrantes[0]')) AS primeiro_palestrante
+FROM eventos;
+
+
+-- Selecione eventos com participantes que ainda não estiveram presentes (presente = false).
+SELECT DISTINCT 
+    e.id,
+    e.titulo
+FROM eventos e,
+JSON_TABLE(
+    e.inscricoes, '$[*]'
+    COLUMNS (
+        nome VARCHAR(100) PATH '$.nome',
+        presente BOOL PATH '$.presente'
+    )
+) AS p
+WHERE p.presente = false;
