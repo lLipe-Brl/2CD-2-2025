@@ -1,0 +1,330 @@
+Microsoft Windows [versão 10.0.22631.5768]
+(c) Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\47419992894>cd C:\Users\47419992894\Documents\MongoDB\mongosh-2.5.7-win32-x64\mongosh-2.5.7-win32-x64\bin
+
+C:\Users\47419992894\Documents\MongoDB\mongosh-2.5.7-win32-x64\mongosh-2.5.7-win32-x64\bin> mongosh --port 27017
+Current Mongosh Log ID: 68b8bcadf5aec4177b735188
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.7
+Using MongoDB:          8.0.13
+Using Mongosh:          2.5.7
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-03T19:07:52.441-03:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2025-09-03T19:07:52.442-03:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+------
+
+test> use favoritos
+switched to db favoritos
+favoritos> db.createCollection("filmes")
+{ ok: 1 }
+favoritos> db.filmes.insertOne({titulo: 'Star Wars VI', ano: '1977', genero:["Ação", "Ficção Científica"], atores: [{nome:"Mark Hamill"}, {nome: "Harrison Ford"}, {nome: "Carrie Fisher"}], avaliacao: 8.6, disponivelStreaming: true})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68b8c441f5aec4177b735189')
+}
+favoritos> db.filmes.insertOne({titulo: 'Star Wars VI', ano: '1977', genero:["Ação", "Ficção Científica"], atores: [{nome:"Mark Hamill"}, {nome: "Harrison F... db.filmes.find()
+[
+  {
+    _id: ObjectId('68b8c441f5aec4177b735189'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c5ebf5aec4177b73518a'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  }
+]
+favoritos> db.produtos.deleteOne({filmes : true})
+{ acknowledged: true, deletedCount: 0 }
+favoritos> db.produtos.find()
+
+favoritos> db.createCollection("filmes")
+{ ok: 1 }
+favoritos> db.filmes.insertOne({titulo: 'Star Wars VI', ano: '1977', genero:["Ação", "Ficção Científica"], atores: [{nome:"Mark Hamill"}, {nome: "Harrison Ford"}, {nome: "Carrie Fisher"}], avaliacao: 8.6, disponivelStreaming: true})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68b8c719f5aec4177b73518b')
+}
+favoritos> db.filmes.insertOne({titulo: 'Star Wars V', ano: '1980', genero:["Ação", "Ficção Científica"], atores: [{nome:"Mark Hamill"}, {nome: "Harrison Ford"}, {nome: "Carrie Fisher"}], avaliacao: 8.6, disponivelStreaming: true})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68b8c7a8f5aec4177b73518c')
+}
+favoritos> db.filmes.insertOne({titulo: 'Star Wars: Episódio III', ano: '2005', genero:["Ação", "Ficção Científica"], atores: [{nome:"Ewan McGregor"}, {nome: "Hayden Christensen"}, {nome: "Nataly Portman"}, avaliacao: 7.6, disponivelStreaming: true})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:205)
+
+> 1 | db.filmes.insertOne({titulo: 'Star Wars: Episódio III', ano: '2005', genero:["Ação", "Ficção Científica"], atores: [{nome:"Ewan McGregor"}, {nome: "Hayden Christensen"}, {nome: "Nataly Portman"}, avaliacao: 7.6, disponivelStreaming: true})
+    |                                                       ^
+  2 |
+
+favoritos> db.filmes.insertOne({titulo: 'Star Wars: Episódio III', ano: '2005', genero:["Ação", "Ficção Científica"], atores: [{nome:"Ewan McGregor"}, {nome: "Hayden Christensen"}, {nome: "Nataly Portman"}], avaliacao: 7.6, disponivelStreaming: true})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68b8c8c6f5aec4177b73518d')
+}
+favoritos> db.filmes.find()
+[
+  {
+    _id: ObjectId('68b8c441f5aec4177b735189'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c5ebf5aec4177b73518a'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c719f5aec4177b73518b'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c7a8f5aec4177b73518c'),
+    titulo: 'Star Wars V',
+    ano: '1980',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c8c6f5aec4177b73518d'),
+    titulo: 'Star Wars: Episódio III',
+    ano: '2005',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Ewan McGregor' },
+      { nome: 'Hayden Christensen' },
+      { nome: 'Nataly Portman' }
+    ],
+    avaliacao: 7.6,
+    disponivelStreaming: true
+  }
+]
+favoritos> db.filmes.find({avaliacao:{$gt: 8} })
+[
+  {
+    _id: ObjectId('68b8c441f5aec4177b735189'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c5ebf5aec4177b73518a'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c719f5aec4177b73518b'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c7a8f5aec4177b73518c'),
+    titulo: 'Star Wars V',
+    ano: '1980',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  }
+]
+favoritos> db.filmes.find({ titulo: { $regex: /^T/i } })
+
+favoritos> db.filmes.find({ genero: "Drama" })
+
+favoritos> db.filmes.find({ atores: { $exists: true } })
+[
+  {
+    _id: ObjectId('68b8c441f5aec4177b735189'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c5ebf5aec4177b73518a'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c719f5aec4177b73518b'),
+    titulo: 'Star Wars VI',
+    ano: '1977',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c7a8f5aec4177b73518c'),
+    titulo: 'Star Wars V',
+    ano: '1980',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Mark Hamill' },
+      { nome: 'Harrison Ford' },
+      { nome: 'Carrie Fisher' }
+    ],
+    avaliacao: 8.6,
+    disponivelStreaming: true
+  },
+  {
+    _id: ObjectId('68b8c8c6f5aec4177b73518d'),
+    titulo: 'Star Wars: Episódio III',
+    ano: '2005',
+    genero: [ 'Ação', 'Ficção Científica' ],
+    atores: [
+      { nome: 'Ewan McGregor' },
+      { nome: 'Hayden Christensen' },
+      { nome: 'Nataly Portman' }
+    ],
+    avaliacao: 7.6,
+    disponivelStreaming: true
+  }
+]
+favoritos> db.filmes.find({ "atores.personagem": "Cobb", avaliacao: { $gt: 8 } })
+
+favoritos> db.filmes.updateOne(
+...   { titulo: "Forrest Gump" },
+...   { $inc: { avaliacao: 0.2 } }
+... db.filmes.updateOne(
+...   { titulo: "Forrest Gump" },
+...   { $inc: { avaliacao: 0.2 } }
+...
+Uncaught:
+SyntaxError: Unexpected token, expected "," (4:0)
+
+  2 |   { titulo: "Forrest Gump" },
+  3 |   { $inc: { avaliacao: 0.2 } }
+> 4 | db.filmes.updateOne(
+    | ^
+  5 |   { titulo: "Forrest Gump" },
+  6 |   { $inc: { avaliacao: 0.2 } }
+  7 |
+
+favoritos> db.filmes.updateOne({titulo: "StarWars VI"}, {$inc: {avaliacao: 0.2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+favoritos> db.filmes.updateOne({ titulo: "Star Wars VI" },{ $set: { disponivelStreaming: false } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+favoritos> db.filmes.updateOne({ titulo: "The Dark Knight" },{ $push: { atores: { nome: "Aaron Eckhart", personagem: "Harvey Dent" } } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+favoritos> db.filmes.aggregate([{ $match: { ano: { $lt: 2000 } } },{ $count: "total_filmes_antes_de_2000" }])
+
+favoritos> db.filmes.find([{ $match: { ano: { $lt: 2000 } } }])
+MongoInvalidArgumentError: Query filter must be a plain object or ObjectId
+favoritos>
